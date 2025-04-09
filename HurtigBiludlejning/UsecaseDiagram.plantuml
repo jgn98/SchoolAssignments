@@ -1,0 +1,67 @@
+@startuml UseCase Diagram
+skinparam packageStyle rectangle
+skinparam usecase {
+    BackgroundColor WhiteSmoke
+    BorderColor Black
+    ArrowColor Black
+}
+skinparam actor {
+    BorderColor Black
+    BackgroundColor White
+}
+skinparam note {
+    BackgroundColor LightYellow
+    BorderColor Black
+}
+
+left to right direction
+
+actor "Employee" as em
+actor "Boss" as bs
+
+rectangle "Quick Car Rental" {
+    
+    package "Rent Car" {
+        usecase "Select Car" as UC5
+        usecase "Select Date" as UC6
+    }
+
+    note right of UC5
+        Precondition:
+        Car must be available
+    end note
+    
+    
+    package "Manage Carpark" {
+        usecase "Add new car" as UC2
+        usecase "Delete Car" as UC3
+        usecase "Update Car" as UC4
+        usecase "Change Status of Car" as UC1
+    note right of UC1
+        Precondition:
+        Car must be added
+    end note
+    note right of UC1
+        Postcondition:
+        Rental status is changed
+    end note
+    }
+
+    note right of UC6
+        Postcondition:
+        Confirmation mail recieved
+    end note
+}
+
+' Boss relationships
+bs -- UC2 #blue
+bs -- UC3 #blue
+bs -- UC1 #blue
+bs -- UC4 #blue
+
+' Employee relationships
+em -- UC5 #Red
+em -- UC6 #Red
+em -- UC1 #Red
+
+@enduml

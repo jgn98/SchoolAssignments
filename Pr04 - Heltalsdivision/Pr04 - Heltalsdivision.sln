@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pr04 - Heltalsdivision", "Pr04 - Heltalsdivision.csproj", "{09E6ED0A-885F-490F-AEE5-BD748A2559B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{09E6ED0A-885F-490F-AEE5-BD748A2559B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E6ED0A-885F-490F-AEE5-BD748A2559B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E6ED0A-885F-490F-AEE5-BD748A2559B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E6ED0A-885F-490F-AEE5-BD748A2559B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3283BB70-D36D-4C61-A842-06B7F4750705}
+	EndGlobalSection
+EndGlobal

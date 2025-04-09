@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="ReturnCar.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Bil.png" />
+    <None Remove="Images\Bil.png" />
+    <None Remove="Images\HurtigBiludlejningLogo.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="ReturnCar.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="HurtigBiludlejningLogo.webp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Bil.png" />
+    <Resource Include="Images\HurtigBiludlejningLogo.jpg" />
+  </ItemGroup>
+
+</Project>

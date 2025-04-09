@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pr11_Winniethepooh", "Pr11_Winniethepooh\Pr11_Winniethepooh.csproj", "{ACC0F887-8236-411B-9CEC-FCD0FDB30131}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinnieTest", "WinnieTest\WinnieTest.csproj", "{58BC62DE-174C-44E7-9C42-42EEBFBE5F1F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACC0F887-8236-411B-9CEC-FCD0FDB30131}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACC0F887-8236-411B-9CEC-FCD0FDB30131}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACC0F887-8236-411B-9CEC-FCD0FDB30131}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACC0F887-8236-411B-9CEC-FCD0FDB30131}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58BC62DE-174C-44E7-9C42-42EEBFBE5F1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58BC62DE-174C-44E7-9C42-42EEBFBE5F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58BC62DE-174C-44E7-9C42-42EEBFBE5F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58BC62DE-174C-44E7-9C42-42EEBFBE5F1F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

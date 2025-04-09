@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObservablePattern", "ObservablePattern\ObservablePattern.csproj", "{8C4C013F-A1BD-44C3-B8CC-07DAC78FB2DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObserverTest", "ObserverTest\ObserverTest.csproj", "{55095D71-23ED-4D3D-8A79-E5957231B725}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C4C013F-A1BD-44C3-B8CC-07DAC78FB2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4C013F-A1BD-44C3-B8CC-07DAC78FB2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4C013F-A1BD-44C3-B8CC-07DAC78FB2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4C013F-A1BD-44C3-B8CC-07DAC78FB2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55095D71-23ED-4D3D-8A79-E5957231B725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55095D71-23ED-4D3D-8A79-E5957231B725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55095D71-23ED-4D3D-8A79-E5957231B725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55095D71-23ED-4D3D-8A79-E5957231B725}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

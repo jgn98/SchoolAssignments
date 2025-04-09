@@ -1,0 +1,32 @@
+@startuml Create New Car
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title Create New Car
+
+participant ":MainWindow" as MW
+participant ":MainViewModel" as MVM
+participant ":CarViewModel" as CVM
+participant ":CarRepository" as CR
+participant ":Car" as CA
+participant ":Category" as CAT
+
+-> MW ++: CreateNewCar    
+    MW -> MVM ++: CreateNewCar()
+        MVM -> CVM ++: AddNewCar(Cars)
+            CVM -> CR ++: AddCarToList()
+                CR -> CA ++: Car(make : string, model : string, fuel,\n enum, status : enum, plate : string,\n id : char, int mileage)
+                CA -> CAT ++: Category(ID : Char)
+                
+                alt ID == "A"
+                    CA -> CAT: Economy
+                else ID == "B"
+                    CA -> CAT: Standard
+                else ID == "C"
+                    CA -> CAT: Luxury
+                end
+                return Category
+            return Car
+        return
+        return
+        return Message
+@enduml

@@ -1,0 +1,32 @@
+@startuml Booking
+skinparam style strictuml
+skinparam sequenceMessageAlign center
+title Booking
+
+participant ":MainWindow" as MW
+participant ":MainViewModel" as MVM
+
+participant ":CarViewModel" as CVM
+participant ":CarRepo" as CR
+participant ":BookingViewModel" as BVM
+
+participant ":BookingRepo" as BR
+participant ":Booking" as BO
+
+
+-> MW ++: Reservations    
+    MW -> MVM ++: CreateBooking()
+        MVM -> BVM ++: AddNewBooking(Bookings)
+            BVM -> MVM ++: GetSelectedCar(MainViewModel)
+        MVM -> CVM ++: GetSelectedCar(CarViewModel)
+                    CVM -> CR ++: SelectedCar(Cars)
+                    return SelectedCar
+            return SelectedCar
+        return SelectedCar
+            BVM -> BR ++: AddBookingToList(BookingViewModel)
+                BR -> BO ++: Booking(name : string, address : string, phone : string, \n e-mail : string, licenseNo : string,\n startDate : DateTime, endDate : DateTime \n pickUpTime : TimeSpan, car : String)
+                return Booking
+            return
+        return
+    return Message
+@enduml
