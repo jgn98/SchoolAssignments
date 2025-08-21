@@ -9,3 +9,7 @@ input {
     background-color: aliceblue;
     border-radius: 25px;
 }
+label {
+    font : normal 15px arial;
+    font-weight: bold;
+}
