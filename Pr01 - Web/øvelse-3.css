@@ -1,0 +1,35 @@
+.centered {
+  margin: 0 auto;
+  text-align: center;
+  justify-content: center;
+
+}
+p {
+    font: Arial;
+}
+#New {
+    color: rgb(245, 99, 0);
+    font-weight: bold;
+}
+#Item{
+    font-size: 30px;
+}
+#Caption {
+    font-size: 60px;
+}
+#Price {
+    font-size: 20px;
+
+
+}
+.btn {
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: royalblue;
+    color: white;
+    font-weight: bold;
+    cursor : pointer;
+}

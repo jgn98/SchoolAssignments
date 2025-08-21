@@ -1,0 +1,21 @@
+#price {
+    color: rgb(0, 118, 0);
+    font-weight: bold;
+}
+.btn {
+    border-radius: 25px;
+    border: none;
+    height: 30px;
+    width: 100px;
+    cursor: pointer;
+}
+.Add {
+    background-color: rgb(255, 216, 20);
+}
+.Buy {
+    background-color: rgb(255, 164, 28);
+}
+
+a {
+    color: rgb(0, 113, 133);
+}
