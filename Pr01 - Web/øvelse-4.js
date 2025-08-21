@@ -1,10 +1,16 @@
 console.log("Hello World!");
 
-let name = "Kim";
-let age = 30;
-
-console.log(`${name} er ${age} år gammel`);
 
 function Alert(){
-    alert(`${name} er ${age} år gammel`);
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+
+    console.log(`${name} er ${age} år gammel`);
+
+    if (age >= 70)
+    alert(`Dav ${name}, du er gammel!`);
+    else if(age <= 60)
+    alert(`Dav ${name}, du er ung`)
+    else
+    alert(`Dav`)
 }
