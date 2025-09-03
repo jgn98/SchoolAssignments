@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieMania.Persistence;
 
 namespace MovieMania.Controllers;
 
@@ -7,6 +8,7 @@ public class MovieController : Controller
     // GET
     public IActionResult Index()
     {
-        return View();
+        var movies = MovieRepository.GetAll();
+        return View(movies);
     }
 }
