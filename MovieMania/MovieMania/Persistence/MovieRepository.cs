@@ -1,4 +1,4 @@
-namespace Pr02_MovieMania.Persitence;
+﻿namespace MovieMania.Persistence;
 
 public class MovieRepository
 {

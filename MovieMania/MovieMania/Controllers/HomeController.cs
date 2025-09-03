@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Pr02_MovieMania.Models;
+using MovieMania.Models;
 
-namespace Pr02_MovieMania.Controllers;
+namespace MovieMania.Controllers;
 
 public class HomeController : Controller
 {

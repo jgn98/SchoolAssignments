@@ -1,4 +1,4 @@
-namespace Pr02_MovieMania.Models;
+namespace MovieMania.Models;
 
 public class ErrorViewModel
 {
