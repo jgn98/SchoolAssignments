@@ -1,0 +1,16 @@
+@using MovieMania.Controllers
+@model Movie
+
+@section title{
+    <h1>Add movie</h1>
+}
+
+<form asp-action="Add" method="post">
+
+    <partial name="_Movie" model="Model" />
+
+    <div class="mt-auto pt-2">
+        <button type="submit" class="btn btn-primary" asp-controller="Movie" asp-action="Add">Submit</button>
+        <a class="btn btn-danger" asp-controller="Movie" asp-action="Index">Cancel</a>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+@model Movie
+
+@section title{
+    <h1>Edit movie</h1>
+}
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <input asp-for="MovieId" type="hidden" />
+
+    <partial name="_Movie" model="Model" />
+
+    <div class="mt-auto pt-2">
+        <button type="submit" class="btn btn-primary" asp-controller="Movie" asp-action="Edit">Update</button>
+        <a class="btn btn-danger" asp-controller="Movie" asp-action="Index">Cancel</a>
+    </div>
+</form>

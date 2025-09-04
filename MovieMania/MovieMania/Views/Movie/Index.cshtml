@@ -5,10 +5,11 @@
 {
     <div class="d-flex justify-content-between align-items-center p-2 mb-3">
         <h1 class="mb-0">Movies:</h1>
-        <a  class="btn btn-primary">+ Add movie</a>
+        <a  class="btn btn-primary" asp-controller="Movie" asp-action="Add">+ Add movie</a>
     </div>
 }
 
+<body>
 <div class="row row-cols-1 row-cols-md-4 g-1">
     @foreach (Movie movie in Model)
     {
@@ -19,11 +20,18 @@
                     <h6 class="card-subtitle mb-2 text-body-secondary" style="color: #636363">@movie.ReleaseYear | @movie.DurationInMinutes min | @movie.Rating ★</h6>
                     <p class="card-text">@movie.Description</p>
                     <div class="mt-auto">
-                        <a href="#" class="btn btn-primary" style="margin-top: auto">Edit</a>
-                        <a href="#" class="btn btn-danger" style="margin-top: auto">Delete</a>
+                        <a asp-controller="Movie" asp-action="Edit" asp-route-movieId="@movie.MovieId" class="btn btn-primary" style="margin-top: auto">Edit</a>
+                        <a asp-controller="Movie" asp-action="Delete" asp-route-movieId="@movie.MovieId" class="btn btn-danger" style="margin-top: auto">Delete</a>
                     </div>
                 </div>
             </div>
         </div>
     }
 </div>
+
+@section scripts{
+    function confirm deletion() {
+        return confirm("Are you sure you want to delete the movie @Movie.Title?");
+    }
+}
+</body>
