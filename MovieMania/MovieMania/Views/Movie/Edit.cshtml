@@ -1,7 +1,7 @@
 @model Movie
 
 @section title{
-    <h1>Edit movie</h1>
+    <h1 class="text-center">Edit movie</h1>
 }
 
 <form asp-action="Edit" method="post">
@@ -11,8 +11,8 @@
 
     <partial name="_Movie" model="Model" />
 
-    <div class="mt-auto pt-2">
-        <button type="submit" class="btn btn-primary" asp-controller="Movie" asp-action="Edit">Update</button>
-        <a class="btn btn-danger" asp-controller="Movie" asp-action="Index">Cancel</a>
+    <div class="mt-auto pt-2 d-flex justify-content-center">
+        <button type="submit" class="btn btn-primary m-1" asp-controller="Movie" asp-action="Edit">Update</button>
+        <a class="btn btn-secondary m-1" asp-controller="Movie" asp-action="Index">Cancel</a>
     </div>
 </form>
