@@ -13,7 +13,8 @@ public static class MovieRepository
             ReleaseYear = 2010,
             DurationInMinutes = 148,
             Description = "A mind-bending thriller about dreams within dreams.",
-            Rating = 9
+            Rating = 9,
+            DirectorId = 1,
         },
         new Movie
         {
@@ -22,7 +23,8 @@ public static class MovieRepository
             ReleaseYear = 1999,
             DurationInMinutes = 136,
             Description = "A hacker discovers reality is a simulation.",
-            Rating = 10
+            Rating = 10,
+            DirectorId = 2,
         },
         new Movie
         {
@@ -31,7 +33,8 @@ public static class MovieRepository
             ReleaseYear = 2014,
             DurationInMinutes = 169,
             Description = "Astronauts travel through a wormhole to save humanity.",
-            Rating = 8
+            Rating = 8,
+            DirectorId = 1,
         },
         new Movie
         {
@@ -40,7 +43,8 @@ public static class MovieRepository
             ReleaseYear = 1994,
             DurationInMinutes = 88,
             Description = "A young lion prince flees his kingdom only to learn the true meaning of responsibility.",
-            Rating = 7
+            Rating = 7,
+            DirectorId = 3,
         },
         new Movie
         {
@@ -49,7 +53,8 @@ public static class MovieRepository
             ReleaseYear = 1995,
             DurationInMinutes = 81,
             Description = "Toys come to life when humans aren’t around.",
-            Rating = 10
+            Rating = 10,
+            DirectorId = 4,
         },
         new Movie
         {
@@ -58,7 +63,8 @@ public static class MovieRepository
             ReleaseYear = 2008,
             DurationInMinutes = 152,
             Description = "Batman faces the Joker in a battle for Gotham's soul.",
-            Rating = 10
+            Rating = 10,
+            DirectorId = 1,
         },
         new Movie
         {
@@ -67,7 +73,8 @@ public static class MovieRepository
             ReleaseYear = 2003,
             DurationInMinutes = 100,
             Description = "A clownfish sets out on a journey to find his missing son.",
-            Rating = 8
+            Rating = 8,
+            DirectorId = 5,
         },
         new Movie
         {
@@ -76,7 +83,8 @@ public static class MovieRepository
             ReleaseYear = 2003,
             DurationInMinutes = 99,
             Description = "The best worst movie ever made.",
-            Rating = 10
+            Rating = 10,
+            DirectorId = 6,
         },
         new Movie
         {
@@ -85,7 +93,8 @@ public static class MovieRepository
             ReleaseYear = 2017,
             DurationInMinutes = 164,
             Description = "A young blade runner uncovers a long-buried secret.",
-            Rating = 8
+            Rating = 8,
+            DirectorId = 7,
         },
         new Movie
         {
@@ -94,18 +103,39 @@ public static class MovieRepository
             ReleaseYear = 2021,
             DurationInMinutes = 155,
             Description = "The son of a noble family becomes the protector of a desert planet.",
-            Rating = 9
+            Rating = 9,
+            DirectorId = 7,
         }
     };
 
     public static List<Movie> GetAll()
     {
-        return movies;
+        if(movies != null && movies.Count > 0)
+        {
+            foreach (var movie in movies)
+            {
+                movies.ForEach(x =>
+                {
+                    if (x.DirectorId.HasValue)
+                    {
+                        x.Director = DirectorRepository.GetById(x.DirectorId.Value);
+                    }
+                });
+            }
+        }
+            
+        return movies ?? new List<Movie>();
     }
 
     public static Movie? GetById(int id)
     {
-        return movies.FirstOrDefault(x => x.MovieId == id);
+        var movie = movies.FirstOrDefault(x => x.MovieId == id);
+
+        if(movie?.DirectorId != null)
+        {
+            movie.Director = DirectorRepository.GetById(movie.DirectorId.Value);    
+        }
+        return movie;
     }
 
     public static void Add(Movie movie)
@@ -132,8 +162,12 @@ public static class MovieRepository
             movieToUpdate.DurationInMinutes = movie.DurationInMinutes;
             movieToUpdate.Description = movie.Description;
             movieToUpdate.Rating = movie.Rating;
-        } 
+            movieToUpdate.DirectorId = movie.DirectorId;
+        }
     }
 }
+
+
+
 
 

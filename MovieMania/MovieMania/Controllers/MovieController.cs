@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MovieMania.Models;
 using MovieMania.Persistence;
+using MovieMania.ViewModels;
 
 namespace MovieMania.Controllers;
 
@@ -20,14 +21,14 @@ public class MovieController : Controller
     }
     
     [HttpPost]
-    public IActionResult Add(Movie movie)
+    public IActionResult Add(MovieViewModel movieViewModel)
     {
         if (ModelState.IsValid)
         {
-            MovieRepository.Add(movie);
+            MovieRepository.Add(movieViewModel.movie);
             return RedirectToAction("Index");
         }
-        return View(movie);
+        return View(movieViewModel);
     }
     
     [HttpGet]
@@ -39,14 +40,14 @@ public class MovieController : Controller
         
     }
     [HttpPost]
-    public IActionResult Edit(Movie movie)
+    public IActionResult Edit(MovieViewModel movieViewModel)
     {
         if (ModelState.IsValid)
         {
-            MovieRepository.Update(movie.MovieId ?? 0, movie);
+            MovieRepository.Update(movieViewModel.movie.MovieId ?? 0, movieViewModel.movie);
             return RedirectToAction("Index");
         }
-        return View(movie);
+        return View(movieViewModel);
     }
     
     [HttpGet]

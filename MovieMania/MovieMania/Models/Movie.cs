@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using EnvironmentName = Microsoft.AspNetCore.Hosting.EnvironmentName;
 
 namespace MovieMania.Models;
 
@@ -24,4 +25,10 @@ public class Movie
     
     [Range(1, 10, ErrorMessage = "Rating must be between 1 and 10")]  
     public int? Rating { get; set; }
+    
+    [Required]
+    [Display(Name = "Director")]
+    public int? DirectorId { get; set; }
+    
+    public Director? Director { get; set; }
 }

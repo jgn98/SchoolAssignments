@@ -1,4 +1,4 @@
-@model Movie
+@model MovieViewModel
 
 @section title{
     <h1 class="text-center">Edit movie</h1>
@@ -7,7 +7,7 @@
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
 
-    <input asp-for="MovieId" type="hidden" />
+    <input asp-for="movie.MovieId" type="hidden" />
 
     <partial name="_Movie" model="Model" />
 

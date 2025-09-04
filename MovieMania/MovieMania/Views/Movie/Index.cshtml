@@ -18,6 +18,7 @@
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">@movie.Title</h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary" style="color: #636363">@movie.ReleaseYear | @movie.DurationInMinutes min | @movie.Rating ★</h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary" style="color: #636363">Directed by: @(movie.Director != null ? movie.Director.FullName : "Unknown")</h6>
                     <p class="card-text">@movie.Description</p>
                     <div class="mt-auto">
                         <a asp-controller="Movie" asp-action="Edit" asp-route-movieId="@movie.MovieId" class="btn btn-primary" style="margin-top: auto">Edit</a>
