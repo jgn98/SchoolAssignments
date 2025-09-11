@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using TimeSlot.Data;
 using TimeSlot.Models;
 
@@ -9,27 +10,30 @@ public class BookingRepository : IBookingRepository
     
     public void Add(Booking booking)
     {
-        throw new NotImplementedException();
+        _context.Bookings.Add(booking);
+        _context.SaveChanges();       
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        _context.Bookings.Remove(GetById(id));
+        _context.SaveChanges();       
     }
 
     public List<Booking> GetAll()
     {
-        throw new NotImplementedException();
+        return _context.Bookings.Include(b => b.Room).ToList();
     }
 
     public Booking? GetById(int id)
     {
-        throw new NotImplementedException();
+        return _context.Bookings.Include(b => b.Room).FirstOrDefault(b => b.BookingId == id);
     }
 
     public void Update(Booking booking)
     {
-        throw new NotImplementedException();
+        _context.Update(booking);
+        _context.SaveChanges();
     }
 
     public BookingRepository(TimeSlotContext context)
