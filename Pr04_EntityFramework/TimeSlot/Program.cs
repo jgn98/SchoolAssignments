@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using TimeSlot.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<TimeSlotContext>(options => { options.UseAzureSql(builder.Configuration.GetConnectionString("MyDBConnection")); });
 
 var app = builder.Build();
 
