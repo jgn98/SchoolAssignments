@@ -1,0 +1,16 @@
+﻿@model Character
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <div class="text-center">
+        <h1 class="display-4">Find Character</h1>
+
+        <form asp-controller="RickAndMorty" asp-action="Index" method="post">
+            <div class="mb-3">
+                <label for="CharacterID" class="form-label">Character ID</label>
+                <input type="number" class="form-control" id="CharacterID" name="id" placeholder="Input Character ID" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
