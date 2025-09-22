@@ -1,4 +1,4 @@
-﻿@model Character
+﻿@model RickAndMortyViewModel
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -8,9 +8,11 @@
         <form asp-controller="RickAndMorty" asp-action="Index" method="post">
             <div class="mb-3">
                 <label for="CharacterID" class="form-label">Character ID</label>
-                <input type="number" class="form-control" id="CharacterID" name="id" placeholder="Input Character ID" />
+                <input type="number" class="form-control" id="CharacterID" name="Id" placeholder="Input Character ID" />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Character ID</button>
+            <a type="button" class="btn btn-warning" asp-controller="RickAndMorty" asp-action="All">Show All Characters </a>
+            
         </form>
     </div>
 </div>

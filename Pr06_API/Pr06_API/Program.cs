@@ -4,9 +4,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient("RickAndMortyClient ", client => client.BaseAddress = new Uri("https://rickandmortyapi.com/api/"));
-builder.Services.AddScoped<IRickAndMortyHttpService, RickAndMortyHttpService>();
-
+builder.Services.AddHttpClient<IRickAndMortyHttpService, RickAndMortyHttpService>(client =>
+{
+    client.BaseAddress = new Uri("https://rickandmortyapi.com/api/");
+    client.Timeout = TimeSpan.FromSeconds(10);
+});
 
 var app = builder.Build();
 

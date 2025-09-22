@@ -11,9 +11,29 @@ public class RickAndMortyController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(int id)
     {
-        var result = await _rickAndMortyHttpService.GetCharacterByIdAsync(id);
-        
-        return View(result);
+        var ch = await _rickAndMortyHttpService.GetCharacterByIdAsync(id);
+        if (ch is null) return NotFound();
+
+        var vm = new RickAndMortyViewModel
+        {
+            Character = ch
+        };
+
+        return View(vm);
+    }
+    
+    
+    [HttpGet]
+    public async Task<IActionResult> All()
+    {
+        var list = await _rickAndMortyHttpService.GetAllCharactersAsync();
+
+        var vm = new RickAndMortyViewModel
+        {
+            Characters = list
+        };
+
+        return View(vm);
     }
 
     public RickAndMortyController(IRickAndMortyHttpService rickAndMortyHttpService)

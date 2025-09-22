@@ -1,0 +1,17 @@
+@model RickAndMortyViewModel
+
+
+<h2>All Characters (@Model.Characters.Count)</h2>
+
+
+<div class="text-center">
+    <ul>
+        @foreach (var c in Model.Characters)
+        {
+            <li>
+                <img src="@c.Image" alt="@c.Name" width="50" />
+                <strong>@c.Name</strong> - @c.Status, @c.Species
+            </li>
+        }
+    </ul>
+</div>

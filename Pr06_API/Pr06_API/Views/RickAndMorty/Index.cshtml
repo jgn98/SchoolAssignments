@@ -1,6 +1,9 @@
-@model Character
+@model RickAndMortyViewModel
 
 <div class="text-center">
-    <h1 class="display-4"></h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2>@Model.Character.Name</h2>
+    <img src="@Model.Character.Image" alt="@Model.Character.Name" style="max-width:200px"/>
+    <p>Status: @Model.Character.Status</p>
+    <p>Species: @Model.Character.Species</p>
+    <p>Gender: @Model.Character.Gender</p>
 </div>
