@@ -15,58 +15,64 @@ public class BooksController : Controller
         _bookRepository = bookRepository;
     }
 
-    [HttpGet]
-    [Route("/api/books")]
-    public IActionResult GetBooks()
+    [HttpGet("api/books")]
+    public async Task<ActionResult<List<Book>>> GetAll()
     {
-        return Ok(_bookRepository.GetAllBooks());
+        var books = await _bookRepository.GetAllBooks();
+        return Ok(books);
     }
     
-    [HttpGet]
-    [Route("/api/books/{id}")]
-    public IActionResult GetBookById(int id)
+    [HttpGet("api/books/{id:int}")]
+    public async Task<ActionResult<Book>> GetBookById(int id)
     {
-        var book = _bookRepository.GetBookById(id);
-        if (book == null)
-            return NotFound();
-        if (book.Id <= 0)
-            return BadRequest();
+        if (id <= 0) return BadRequest("Id skal være > 0.");
+
+        var book = await _bookRepository.GetBookById(id);
+        if (book is null) return NotFound();
+
         return Ok(book);
     }
     
-    [HttpPost]
-    [Route("/api/books")]
-    public IActionResult AddBook([FromBody] Book book)
+    [HttpPost("api/books")]
+    public async Task<IActionResult> AddBook([FromBody] Book book)
     {
         if (!ModelState.IsValid)
-            return BadRequest();
+            return BadRequest(ModelState);
+
         book.Id = 0;
-        _bookRepository.AddBook(book);
-        return Created();
+        await _bookRepository.AddBook(book);
+
+        return Ok(book);
     }
 
-    [HttpPut]
-    [Route("/api/books/{id}")]
-    public IActionResult UpdateBook([FromBody] Book book)
+    [HttpPut("api/books/{id:int}")]
+    public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
     {
-        if (book.Id <= 0)
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        if (id <= 0) return BadRequest();
+        if (book is null) return BadRequest();
+        
+        if (book.Id != 0 && book.Id != id)
             return BadRequest();
-        if (_bookRepository.GetBookById(book.Id) == null)
-            return NotFound();
-        _bookRepository.UpdateBook(book);
-        return Ok();
+
+        book.Id = id;
+
+        var updated = await _bookRepository.UpdateBook(book);
+        if (!updated) return NotFound();
+
+        return Ok(book);
     }
 
-    [HttpDelete]
-    [Route("/api/books/{id}")]
-    public IActionResult DeleteBook(int id)
+    [HttpDelete("api/books/{id:int}")]
+    public async Task<IActionResult> DeleteBook(int id)
     {
-        if (id <= 0)
-            return BadRequest();
-        if (_bookRepository.GetBookById(id) == null)
-            return NotFound();
-        _bookRepository.DeleteBook(id);
-        return Ok();
+        if (id <= 0) return BadRequest();
+        var deletedBook = await _bookRepository.GetBookById(id);
+
+        var deleted = await _bookRepository.DeleteBook(id);
+        if (!deleted) return NotFound();
+
+        return Ok(deletedBook);
     }
     
     
