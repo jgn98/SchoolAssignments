@@ -5,6 +5,7 @@ using Pr07_WebAPI.Persistence;
 
 namespace Pr07_WebAPI.Controllers;
 
+
 public class BooksController : Controller
 {
     private readonly IBookRepository _bookRepository;
@@ -25,7 +26,7 @@ public class BooksController : Controller
     [HttpGet("api/books/{id:int}")]
     public async Task<ActionResult<Book>> GetBookById(int id)
     {
-        if (id <= 0) return BadRequest("Id skal være > 0.");
+        if (id <= 0) return BadRequest();
 
         var book = await _bookRepository.GetBookById(id);
         if (book is null) return NotFound();
