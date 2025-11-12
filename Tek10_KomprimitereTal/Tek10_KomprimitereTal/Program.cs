@@ -1,10 +1,10 @@
 ﻿using Tek10_KomprimitereTal;
 
-bool hold = true;
+bool running = true;
 uint number = 0;
 
 
-while (hold){
+while (running){
     Console.WriteLine("Welcome to the Prime Number Checker");
     Console.WriteLine("--------------------------------");
     Console.WriteLine("Enter a number: ");
@@ -22,9 +22,9 @@ while (hold){
     foreach (var primeFactor in PrimeFactor.GetPrimeFactors(number))
         Console.WriteLine(primeFactor);
     Console.WriteLine("--------------------------------");
-    Console.WriteLine("Do you want to continue? (y/n)");
+    Console.WriteLine("Do you want to test another number? (y/n)");
     string answer = Console.ReadLine();
-    if (answer == "n") hold = false;
+    if (answer == "n") running = false;
     Console.Clear();
 
 }
