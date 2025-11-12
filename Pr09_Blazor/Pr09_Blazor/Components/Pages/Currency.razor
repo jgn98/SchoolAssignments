@@ -1,0 +1,60 @@
+﻿@page "/currency"
+@rendermode InteractiveServer
+
+<h3>Currency Converter</h3>
+
+<div class="mb-3">
+    <label>Amount:</label>
+    <input type="number" class="form-control" @bind="amount" @bind:event="oninput" style="width: 200px;" />
+</div>
+
+<div class="mb-3">
+    <label>From:</label>
+    <select class="form-select" @bind="fromCurrency" style="width: 200px;">
+        @foreach (var currency in exchangeRates.Keys)
+        {
+            <option value="@currency">@currency</option>
+        }
+    </select>
+</div>
+
+<div class="mb-3">
+    <label>To:</label>
+    <select class="form-select" @bind="toCurrency" style="width: 200px;">
+        @foreach (var currency in exchangeRates.Keys)
+        {
+            <option value="@currency">@currency</option>
+        }
+    </select>
+</div>
+
+<div>
+    <strong>Result: @ConvertedAmount.ToString("F2") @toCurrency</strong>
+</div>
+
+@code {
+    private double amount = 0;
+    private string fromCurrency = "DKK";
+    private string toCurrency = "EUR";
+
+    private Dictionary<string, double> exchangeRates = new()
+    {
+        { "DKK", 1.0 },
+        { "EUR", 0.134 },
+        { "USD", 0.145 },
+        { "GBP", 0.112 }
+    };
+
+    private double ConvertedAmount
+    {
+        get
+        {
+            if (fromCurrency == toCurrency)
+                return amount;
+
+            // Convert to DKK first, then to target currency
+            double amountInDKK = amount / exchangeRates[fromCurrency];
+            return amountInDKK * exchangeRates[toCurrency];
+        }
+    }
+}

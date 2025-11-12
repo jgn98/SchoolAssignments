@@ -1,0 +1,57 @@
+﻿@rendermode InteractiveServer
+@page "/calculator"
+
+<h3>Calculator</h3>
+
+<div>
+    <label>Number 1</label>
+    <input type="number" @bind="number1" />
+</div>
+
+<div>
+    <label>Number 2</label>
+    <input type="number" @bind="number2" />
+</div>
+
+<div>
+    <strong>Result: @result</strong>
+</div>
+
+<div>
+    <button class="btn btn-primary" @onclick="() => Calculate('+')">+</button>
+    <button class="btn btn-primary" @onclick="() => Calculate('-')">-</button>
+    <button class="btn btn-primary" @onclick="() => Calculate('*')">*</button>
+    <button class="btn btn-primary" @onclick="() => Calculate('/')">/</button>
+</div>
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <p style="color: red;">@error</p>
+}
+
+@code {
+    private double number1;
+    private double number2;
+    private double result;
+    private string error = string.Empty;
+
+    private void Calculate(char operation)
+    {
+        error = string.Empty;
+
+        if (operation == '/' && number2 == 0)
+        {
+            error = "Cannot divide by zero";
+            return;
+        }
+
+        result = operation switch
+        {
+            '+' => number1 + number2,
+            '-' => number1 - number2,
+            '*' => number1 * number2,
+            '/' => number1 / number2,
+            _ => 0
+        };
+    }
+}

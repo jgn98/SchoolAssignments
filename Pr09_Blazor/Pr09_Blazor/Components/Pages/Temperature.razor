@@ -1,0 +1,18 @@
+﻿@rendermode InteractiveServer
+@page "/temperature"
+
+<h3>Temperaturomregner</h3>
+
+<div>
+    <label>Celsius:</label>
+    <input type="number" @bind="celsius" @bind:event="oninput" />
+</div>
+
+<div>
+    <p>Fahrenheit: @fahrenheit</p>
+</div>
+
+@code {
+    private double celsius = 0;
+    private double fahrenheit => celsius * 9.0 / 5.0 + 32;
+}

@@ -1,0 +1,75 @@
+﻿@page "/todo"
+@rendermode InteractiveServer
+
+<h3>To Do</h3>
+
+<div class="mb-3">
+    <input type="text" class="form-control" @bind="newTaskTitle" placeholder="Enter task name" style="display: inline-block; width: auto;" />
+    <button class="btn btn-primary" @onclick="AddTask">Add Task</button>
+</div>
+
+<div>
+    @foreach (var task in SortedTasks)
+    {
+        <div class="form-check mb-2" style="@(task.IsCompleted ? "background-color: #f0f0f0;" : "")">
+            <input class="form-check-input" type="checkbox" @bind="task.IsCompleted" id="task-@task.Id" />
+            <label class="form-check-label" for="task-@task.Id" style="@(task.IsCompleted ? "text-decoration: line-through;" : "")">
+                @task.Title
+            </label>
+            @if (task.IsCompleted && task.CompletedAt.HasValue)
+            {
+                <div class="text-muted small">
+                    Completed at: @task.CompletedAt.Value.ToString("d. MMMM yyyy")
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<TodoTask> tasks = new()
+    {
+        new TodoTask { Id = 1, Title = "Clean" },
+        new TodoTask { Id = 2, Title = "Work" },
+        new TodoTask { Id = 3, Title = "Study", IsCompleted = true, CompletedAt = new DateTime(2025, 11, 4) },
+        new TodoTask { Id = 4, Title = "Walk dog", IsCompleted = true, CompletedAt = new DateTime(2025, 11, 4) }
+    };
+
+    private int nextId = 5;
+    private string newTaskTitle = string.Empty;
+
+    private IEnumerable<TodoTask> SortedTasks => tasks.OrderBy(t => t.IsCompleted).ThenBy(t => t.Title);
+
+    private void AddTask()
+    {
+        if (!string.IsNullOrWhiteSpace(newTaskTitle))
+        {
+            tasks.Add(new TodoTask { Id = nextId++, Title = newTaskTitle });
+            newTaskTitle = string.Empty;
+        }
+    }
+
+    private class TodoTask
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        private bool isCompleted;
+        public bool IsCompleted
+        {
+            get => isCompleted;
+            set
+            {
+                isCompleted = value;
+                if (value && !CompletedAt.HasValue)
+                {
+                    CompletedAt = DateTime.Now;
+                }
+                else if (!value)
+                {
+                    CompletedAt = null;
+                }
+            }
+        }
+        public DateTime? CompletedAt { get; set; }
+    }
+}
