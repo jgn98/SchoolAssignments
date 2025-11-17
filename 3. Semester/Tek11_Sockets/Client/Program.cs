@@ -47,13 +47,11 @@ namespace Client
             NetworkStream stream = client.GetStream();
             byte[] buffer = new byte[1024];
             
-            // Send client ID
             string clientID = "Client_Jonas_2024";
             byte[] idData = Encoding.ASCII.GetBytes(clientID);
             stream.Write(idData, 0, idData.Length);
             Console.WriteLine($"Sent ID: {clientID}");
             
-            // Modtag public key (n:e)
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
             string publicKeyString = Encoding.ASCII.GetString(buffer, 0, bytesRead);
             Console.WriteLine($"Received public key: {publicKeyString}");
@@ -62,7 +60,6 @@ namespace Client
             int n = int.Parse(keyParts[0]);
             int e = int.Parse(keyParts[1]);
             
-            // Send krypterede beskeder indtil STOP
             while (running)
             {
                 Console.Write("\nEnter message: ");
@@ -94,7 +91,6 @@ namespace Client
                 BigInteger nBig = n;
                 BigInteger eBig = e;
                 
-                // c = m^e mod n
                 BigInteger encrypted = BigInteger.ModPow(m, eBig, nBig);
                 
                 encryptedValues.Add(encrypted.ToString());

@@ -51,18 +51,15 @@ namespace Server
             NetworkStream stream = client.GetStream();
             byte[] buffer = new byte[1024];
             
-            // Modtag client ID
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
             string clientID = Encoding.ASCII.GetString(buffer, 0, bytesRead);
             Console.WriteLine($"Client ID: {clientID}");
             
-            // Send public key (n:e)
             string publicKey = $"{keys.N}:{keys.E}";
             byte[] keyData = Encoding.ASCII.GetBytes(publicKey);
             stream.Write(keyData, 0, keyData.Length);
             Console.WriteLine($"Sent public key: {publicKey}");
             
-            // Modtag krypterede beskeder indtil STOP
             while (running)
             {
                 bytesRead = stream.Read(buffer, 0, buffer.Length);
@@ -93,7 +90,6 @@ namespace Server
                 BigInteger n = keys.N;
                 BigInteger d = keys.D;
                 
-                // m = c^d mod n
                 BigInteger m = BigInteger.ModPow(c, d, n);
                 
                 char decryptedChar = (char)(int)m;
