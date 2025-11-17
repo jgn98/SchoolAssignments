@@ -63,7 +63,7 @@ namespace Server
             while (running)
             {
                 bytesRead = stream.Read(buffer, 0, buffer.Length);
-                if (bytesRead == 0) break;
+                if (bytesRead == 0) running=false;
                 
                 string encryptedMessage = Encoding.ASCII.GetString(buffer, 0, bytesRead);
                 Console.WriteLine($"Received (encrypted): {encryptedMessage}");
