@@ -42,6 +42,7 @@ namespace Client
 
         static void CommunicateWithServer(TcpClient client)
         {
+            bool running = true;
             NetworkStream stream = client.GetStream();
             byte[] buffer = new byte[1024];
             
@@ -57,7 +58,7 @@ namespace Client
             Console.WriteLine($"Server says: {greeting}");
             
             // Send beskeder indtil STOP
-            while (true)
+            while (running)
             {
                 Console.Write("\nEnter message: ");
                 string message = Console.ReadLine();
@@ -68,7 +69,7 @@ namespace Client
                 if (message == "STOP")
                 {
                     Console.WriteLine("Shutting down client...");
-                    break;
+                    running = false;
                 }
             }
         }

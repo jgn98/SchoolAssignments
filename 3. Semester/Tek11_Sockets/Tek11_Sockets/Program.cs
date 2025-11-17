@@ -31,6 +31,7 @@ namespace Server
 
         static void HandleClient(TcpClient client)
         {
+            bool running = true;
             NetworkStream stream = client.GetStream();
             byte[] buffer = new byte[1024];
             
@@ -45,7 +46,7 @@ namespace Server
             stream.Write(greetingData, 0, greetingData.Length);
             
             // Modtag beskeder indtil STOP
-            while (true)
+            while (running)
             {
                 bytesRead = stream.Read(buffer, 0, buffer.Length);
                 if (bytesRead == 0) break;
@@ -56,7 +57,7 @@ namespace Server
                 if (message == "STOP")
                 {
                     Console.WriteLine("STOP command received. Shutting down...");
-                    break;
+                    running = false;
                 }
             }
         }
