@@ -6,8 +6,6 @@ namespace Client
 {
     internal class Program
     {
-        static Socket sck;
-        
         static void Main(string[] args)
         {
             StartClient();
@@ -15,28 +13,27 @@ namespace Client
 
         static void StartClient()
         {
-            sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 1234);
+            TcpClient client = new TcpClient();
             
-            if (!TryConnect(serverEndPoint))
+            if (!TryConnect(client, "127.0.0.1", 1234))
             {
                 Console.WriteLine("Failed to connect to server.");
                 return;
             }
             
             Console.WriteLine("Connected to server.");
-            SendMessage();
-            sck.Close();
+            SendMessage(client);
+            client.Close();
         }
 
-        static bool TryConnect(IPEndPoint endPoint)
+        static bool TryConnect(TcpClient client, string host, int port)
         {
             int maxRetries = 3;
             for (int i = 0; i < maxRetries; i++)
             {
                 try
                 {
-                    sck.Connect(endPoint);
+                    client.Connect(host, port);
                     return true;
                 }
                 catch (SocketException se)
@@ -52,13 +49,15 @@ namespace Client
             return false;
         }
 
-        static void SendMessage()
+        static void SendMessage(TcpClient client)
         {
+            NetworkStream stream = client.GetStream();
+            
             Console.Write("Enter message: ");
             string text = Console.ReadLine();
             byte[] data = Encoding.ASCII.GetBytes(text);
             
-            sck.Send(data);
+            stream.Write(data, 0, data.Length);
             Console.WriteLine("Data sent to server.");
         }
     }

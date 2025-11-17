@@ -6,8 +6,6 @@ namespace Server
 {
     internal class Program
     {
-        static Socket sck;
-        
         static void Main(string[] args)
         {
             StartServer();
@@ -15,31 +13,27 @@ namespace Server
 
         static void StartServer()
         {
-            sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            sck.Bind(new IPEndPoint(IPAddress.Any, 1234));
-            sck.Listen(100);
-            
+            TcpListener listener = new TcpListener(IPAddress.Any, 1234);
+            listener.Start();
             Console.WriteLine("Server listening on port 1234...");
 
-            Socket accepted = sck.Accept();
+            TcpClient client = listener.AcceptTcpClient();
             Console.WriteLine("Client connected");
-            
-            HandleClient(accepted);
-            
-            accepted.Close();
-            sck.Close();
+
+            HandleClient(client);
+
+            client.Close();
+            listener.Stop();
         }
 
-        static void HandleClient(Socket client)
+        static void HandleClient(TcpClient client)
         {
-            byte[] buffer = new byte[client.SendBufferSize];
-            int receivedBytes = client.Receive(buffer);
-            
-            byte[] formatted = new byte[receivedBytes];
-            Array.Copy(buffer, formatted, receivedBytes);
-            
-            string strData = Encoding.ASCII.GetString(formatted);
-            Console.WriteLine("Received Data: " + strData);
+            NetworkStream stream = client.GetStream();
+            byte[] buffer = new byte[1024];
+            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+            string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+            Console.WriteLine($"Received: {message}");
         }
     }
 }
