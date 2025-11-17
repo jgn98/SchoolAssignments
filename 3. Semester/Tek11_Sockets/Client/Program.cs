@@ -13,52 +13,64 @@ namespace Client
 
         static void StartClient()
         {
+            Console.Write("Enter server IP address: ");
+            string serverIPString = Console.ReadLine();
+            
+            Console.Write("Enter server port: ");
+            int port = int.Parse(Console.ReadLine());
+            
+            IPAddress serverIP = IPAddress.Parse(serverIPString);
+            
             TcpClient client = new TcpClient();
             
-            if (!TryConnect(client, "127.0.0.1", 1234))
+            try
             {
-                Console.WriteLine("Failed to connect to server.");
-                return;
+                client.Connect(serverIP, port);
+                Console.WriteLine($"Connected to server at {serverIP}:{port}");
+                
+                CommunicateWithServer(client);
             }
-            
-            Console.WriteLine("Connected to server.");
-            SendMessage(client);
-            client.Close();
+            catch (SocketException se)
+            {
+                Console.WriteLine($"Connection failed: {se.Message}");
+            }
+            finally
+            {
+                client.Close();
+            }
         }
 
-        static bool TryConnect(TcpClient client, string host, int port)
-        {
-            int maxRetries = 3;
-            for (int i = 0; i < maxRetries; i++)
-            {
-                try
-                {
-                    client.Connect(host, port);
-                    return true;
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine($"Connection attempt {i + 1} failed: {se.Message}");
-                    if (i < maxRetries - 1)
-                    {
-                        Console.WriteLine("Retrying...");
-                        Thread.Sleep(1000);
-                    }
-                }
-            }
-            return false;
-        }
-
-        static void SendMessage(TcpClient client)
+        static void CommunicateWithServer(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
+            byte[] buffer = new byte[1024];
             
-            Console.Write("Enter message: ");
-            string text = Console.ReadLine();
-            byte[] data = Encoding.ASCII.GetBytes(text);
+            // Send client ID
+            string clientID = "Client_Jonas_2024";
+            byte[] idData = Encoding.ASCII.GetBytes(clientID);
+            stream.Write(idData, 0, idData.Length);
+            Console.WriteLine($"Sent ID: {clientID}");
             
-            stream.Write(data, 0, data.Length);
-            Console.WriteLine("Data sent to server.");
+            // Modtag hilsen fra server
+            int bytesRead = stream.Read(buffer, 0, buffer.Length);
+            string greeting = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+            Console.WriteLine($"Server says: {greeting}");
+            
+            // Send beskeder indtil STOP
+            while (true)
+            {
+                Console.Write("\nEnter message: ");
+                string message = Console.ReadLine();
+                
+                byte[] messageData = Encoding.ASCII.GetBytes(message);
+                stream.Write(messageData, 0, messageData.Length);
+                
+                if (message == "STOP")
+                {
+                    Console.WriteLine("Shutting down client...");
+                    break;
+                }
+            }
         }
     }
 }
