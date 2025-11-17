@@ -1,9 +1,23 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Numerics;
 
 namespace Server
 {
+    public readonly struct DecryptData
+    {
+        public DecryptData(int n, int e, int d)
+        {
+            N = n;
+            E = e;
+            D = d;
+        }
+        public int N { get; init; }
+        public int E { get; init; }
+        public int D { get; init; }
+    }
+
     internal class Program
     {
         static void Main(string[] args)
@@ -31,6 +45,8 @@ namespace Server
 
         static void HandleClient(TcpClient client)
         {
+            DecryptData keys = new DecryptData(4819, 41, 3881);
+            
             bool running = true;
             NetworkStream stream = client.GetStream();
             byte[] buffer = new byte[1024];
@@ -40,26 +56,51 @@ namespace Server
             string clientID = Encoding.ASCII.GetString(buffer, 0, bytesRead);
             Console.WriteLine($"Client ID: {clientID}");
             
-            // Send hilsen tilbage
-            string greeting = "Velkommen til serveren!";
-            byte[] greetingData = Encoding.ASCII.GetBytes(greeting);
-            stream.Write(greetingData, 0, greetingData.Length);
+            // Send public key (n:e)
+            string publicKey = $"{keys.N}:{keys.E}";
+            byte[] keyData = Encoding.ASCII.GetBytes(publicKey);
+            stream.Write(keyData, 0, keyData.Length);
+            Console.WriteLine($"Sent public key: {publicKey}");
             
-            // Modtag beskeder indtil STOP
+            // Modtag krypterede beskeder indtil STOP
             while (running)
             {
                 bytesRead = stream.Read(buffer, 0, buffer.Length);
                 if (bytesRead == 0) break;
                 
-                string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                Console.WriteLine($"Received: {message}");
+                string encryptedMessage = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+                Console.WriteLine($"Received (encrypted): {encryptedMessage}");
                 
-                if (message == "STOP")
+                string decryptedMessage = DecryptMessage(encryptedMessage, keys);
+                Console.WriteLine($"Decrypted: {decryptedMessage}");
+                
+                if (decryptedMessage == "STOP")
                 {
                     Console.WriteLine("STOP command received. Shutting down...");
                     running = false;
                 }
             }
+        }
+
+        static string DecryptMessage(string encryptedMessage, DecryptData keys)
+        {
+            string[] encryptedValues = encryptedMessage.Split(':');
+            StringBuilder decrypted = new StringBuilder();
+            
+            foreach (string encValue in encryptedValues)
+            {
+                BigInteger c = BigInteger.Parse(encValue);
+                BigInteger n = keys.N;
+                BigInteger d = keys.D;
+                
+                // m = c^d mod n
+                BigInteger m = BigInteger.ModPow(c, d, n);
+                
+                char decryptedChar = (char)(int)m;
+                decrypted.Append(decryptedChar);
+            }
+            
+            return decrypted.ToString();
         }
 
         private static IPAddress GetIPAddress()

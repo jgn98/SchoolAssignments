@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Numerics;
 
 namespace Client
 {
@@ -52,18 +53,25 @@ namespace Client
             stream.Write(idData, 0, idData.Length);
             Console.WriteLine($"Sent ID: {clientID}");
             
-            // Modtag hilsen fra server
+            // Modtag public key (n:e)
             int bytesRead = stream.Read(buffer, 0, buffer.Length);
-            string greeting = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-            Console.WriteLine($"Server says: {greeting}");
+            string publicKeyString = Encoding.ASCII.GetString(buffer, 0, bytesRead);
+            Console.WriteLine($"Received public key: {publicKeyString}");
             
-            // Send beskeder indtil STOP
+            string[] keyParts = publicKeyString.Split(':');
+            int n = int.Parse(keyParts[0]);
+            int e = int.Parse(keyParts[1]);
+            
+            // Send krypterede beskeder indtil STOP
             while (running)
             {
                 Console.Write("\nEnter message: ");
                 string message = Console.ReadLine();
                 
-                byte[] messageData = Encoding.ASCII.GetBytes(message);
+                string encryptedMessage = EncryptMessage(message, n, e);
+                Console.WriteLine($"Encrypted: {encryptedMessage}");
+                
+                byte[] messageData = Encoding.ASCII.GetBytes(encryptedMessage);
                 stream.Write(messageData, 0, messageData.Length);
                 
                 if (message == "STOP")
@@ -72,6 +80,27 @@ namespace Client
                     running = false;
                 }
             }
+        }
+
+        static string EncryptMessage(string message, int n, int e)
+        {
+            List<string> encryptedValues = new List<string>();
+            
+            foreach (char c in message)
+            {
+                int asciiValue = (int)c;
+                
+                BigInteger m = asciiValue;
+                BigInteger nBig = n;
+                BigInteger eBig = e;
+                
+                // c = m^e mod n
+                BigInteger encrypted = BigInteger.ModPow(m, eBig, nBig);
+                
+                encryptedValues.Add(encrypted.ToString());
+            }
+            
+            return string.Join(":", encryptedValues);
         }
     }
 }
