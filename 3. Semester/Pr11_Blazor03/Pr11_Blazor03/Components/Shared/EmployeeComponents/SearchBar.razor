@@ -1,0 +1,28 @@
+﻿<div class="mb-3">
+    <input type="text"
+           class="form-control"
+           placeholder="Search employees..."
+           @bind="SearchText"
+           @bind:event="oninput" />
+</div>
+
+@code {
+    private string _searchText = string.Empty;
+
+    [Parameter]
+    public string SearchText
+    {
+        get => _searchText;
+        set
+        {
+            if (_searchText != value)
+            {
+                _searchText = value;
+                SearchTextChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> SearchTextChanged { get; set; }
+}

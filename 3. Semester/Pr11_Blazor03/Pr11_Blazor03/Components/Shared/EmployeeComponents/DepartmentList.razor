@@ -1,0 +1,17 @@
+﻿
+<div class="d-flex gap-3 flex-wrap">
+    @foreach (var dept in DepartmentRepository.GetAll())
+    {
+        <DepartmentCard DepartmentName="@dept"
+                        IsHighlighted="@(dept == SelectedDepartment)"
+                        OnDepartmentClick="@OnDepartmentSelected" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string? SelectedDepartment { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDepartmentSelected { get; set; }
+}

@@ -1,0 +1,36 @@
+﻿<div class="shop-item @(IsOwned ? "owned" : "")">
+    <div class="item-info">
+        <h4>@Item.Name</h4>
+        <p class="price">Price: @Item.Price.ToString("F5") BTC</p>
+        <p class="rate">Mining Rate: +@Item.MiningRate.ToString("F5") BTC/click</p>
+    </div>
+    <button @onclick="HandlePurchase"
+            disabled="@(!CanAfford || IsOwned)"
+            class="btn btn-success">
+        @(IsOwned ? "Owned" : "Buy")
+    </button>
+</div>
+
+@code {
+    [Parameter]
+    public ShopItem Item { get; set; } = null!;
+
+    [Parameter]
+    public decimal PlayerBalance { get; set; }
+
+    [Parameter]
+    public EventCallback<ShopItem> OnPurchase { get; set; }
+
+    [Parameter]
+    public bool IsOwned { get; set; }
+
+    private bool CanAfford => PlayerBalance >= Item.Price;
+
+    private async Task HandlePurchase()
+    {
+        if (CanAfford && !IsOwned)
+        {
+            await OnPurchase.InvokeAsync(Item);
+        }
+    }
+}

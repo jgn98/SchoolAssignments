@@ -1,0 +1,31 @@
+﻿
+<div class="description-container">
+    <label for="description">Description:</label>
+    <textarea id="description"
+              @bind="Description"
+              @bind:event="oninput"
+              rows="5"
+              cols="50">
+    </textarea>
+</div>
+
+@code {
+    private string _description = string.Empty;
+
+    [Parameter]
+    public string Description
+    {
+        get => _description;
+        set
+        {
+            if (_description != value)
+            {
+                _description = value;
+                DescriptionChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> DescriptionChanged { get; set; }
+}

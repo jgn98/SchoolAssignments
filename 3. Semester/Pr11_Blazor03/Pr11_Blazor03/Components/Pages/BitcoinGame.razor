@@ -1,0 +1,40 @@
+﻿@rendermode InteractiveServer
+@page "/bitcoin"
+
+<PageTitle>Bitcoin Miner</PageTitle>
+
+<div class="game-container">
+    <h1>Bitcoin Mining Game</h1>
+
+    <BitcoinMiner Balance="@balance"
+                  BalanceChanged="@OnBalanceChanged"
+                  MiningRate="@miningRate"
+                  CurrentPickaxe="@currentPickaxe" />
+
+    <ShopList Balance="@balance"
+              BalanceChanged="@OnBalanceChanged"
+              MiningRateChanged="@OnMiningRateChanged"
+              CurrentPickaxeChanged="@OnCurrentPickaxeChanged"
+              CurrentPickaxe="@currentPickaxe" />
+</div>
+
+@code {
+    private decimal balance = 0m;
+    private decimal miningRate = 0.00001m;
+    private string currentPickaxe = "Hands";
+
+    private void OnBalanceChanged(decimal newBalance)
+    {
+        balance = newBalance;
+    }
+
+    private void OnMiningRateChanged(decimal newRate)
+    {
+        miningRate = newRate;
+    }
+
+    private void OnCurrentPickaxeChanged(string pickaxe)
+    {
+        currentPickaxe = pickaxe;
+    }
+}

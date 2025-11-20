@@ -1,0 +1,24 @@
+﻿<div class="card @(IsHighlighted ? "border-primary" : "")">
+    <div class="card-body text-center">
+        <h5 class="card-title">@DepartmentName</h5>
+        <button class="btn btn-primary" @onclick="HandleClick">
+            View Employees
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string DepartmentName { get; set; } = string.Empty;
+
+    [Parameter]
+    public bool IsHighlighted { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDepartmentClick { get; set; }
+
+    private async Task HandleClick()
+    {
+        await OnDepartmentClick.InvokeAsync(DepartmentName);
+    }
+}

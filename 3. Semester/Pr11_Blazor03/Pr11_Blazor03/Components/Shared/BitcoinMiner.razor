@@ -1,0 +1,26 @@
+﻿<div class="miner-container">
+    <h2>Bitcoin Miner</h2>
+    <p class="balance">Balance: @Balance.ToString("F5") BTC</p>
+    <button @onclick="MineBitcoin" class="btn btn-primary">Mine BTC</button>
+    <p class="current-tool">Current Tool: @CurrentPickaxe</p>
+</div>
+
+@code {
+    [Parameter]
+    public decimal Balance { get; set; }
+
+    [Parameter]
+    public EventCallback<decimal> BalanceChanged { get; set; }
+
+    [Parameter]
+    public decimal MiningRate { get; set; } = 0.00001m;
+
+    [Parameter]
+    public string CurrentPickaxe { get; set; } = "Hands";
+
+    private async Task MineBitcoin()
+    {
+        Balance += MiningRate;
+        await BalanceChanged.InvokeAsync(Balance);
+    }
+}

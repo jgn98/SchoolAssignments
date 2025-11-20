@@ -1,0 +1,9 @@
+﻿<div style="padding: 10px; margin: 10px;">
+    <h3 style="color: @Color">Child B</h3>
+    <ChildC />
+</div>
+
+@code {
+    [CascadingParameter]
+    public string Color { get; set; } = "#000000";
+}

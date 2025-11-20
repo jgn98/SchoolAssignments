@@ -1,0 +1,28 @@
+﻿<div class="color-picker">
+    <label for="colorInput">Choose color:</label>
+    <input type="color"
+           id="colorInput"
+           @bind="Color"
+           @bind:event="oninput" />
+</div>
+
+@code {
+    private string _color = "#000000";
+
+    [Parameter]
+    public string Color
+    {
+        get => _color;
+        set
+        {
+            if (_color != value)
+            {
+                _color = value;
+                ColorChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> ColorChanged { get; set; }
+}

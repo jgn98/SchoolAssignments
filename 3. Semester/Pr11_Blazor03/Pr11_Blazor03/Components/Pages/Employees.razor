@@ -1,0 +1,75 @@
+﻿@page "/employees"
+@rendermode InteractiveServer
+
+
+<PageTitle>Employees</PageTitle>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <h1 class="mb-4 text-center">Employees</h1>
+
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-6">
+                    <SearchBar SearchText="@searchText"
+                               SearchTextChanged="@OnSearchTextChanged" />
+                </div>
+            </div>
+
+            <DepartmentList SelectedDepartment="@selectedDepartment"
+                            OnDepartmentSelected="@SelectDepartment" />
+
+            @if (!string.IsNullOrEmpty(selectedDepartment) || !string.IsNullOrEmpty(searchText))
+            {
+                <div class="mt-4">
+                    <h2 class="mb-3">
+                        @if (!string.IsNullOrEmpty(searchText))
+                        {
+                            <text>Search Results</text>
+                        }
+                        else
+                        {
+                            <text>@selectedDepartment Employees</text>
+                        }
+                    </h2>
+                    <EmployeeList Employees="@currentEmployees" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string? selectedDepartment = null;
+    private string searchText = string.Empty;
+    private List<Employee> currentEmployees = new();
+
+    private void SelectDepartment(string department)
+    {
+        searchText = string.Empty;
+        selectedDepartment = department;
+        currentEmployees = EmployeeRepository.GetByDepartment(department);
+    }
+
+    private void OnSearchTextChanged(string search)
+    {
+        searchText = search;
+
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            if (!string.IsNullOrEmpty(selectedDepartment))
+            {
+                currentEmployees = EmployeeRepository.GetByDepartment(selectedDepartment);
+            }
+            else
+            {
+                currentEmployees = new();
+            }
+        }
+        else
+        {
+            selectedDepartment = null;
+            currentEmployees = EmployeeRepository.GetBySearchFilter(search);
+        }
+    }
+}

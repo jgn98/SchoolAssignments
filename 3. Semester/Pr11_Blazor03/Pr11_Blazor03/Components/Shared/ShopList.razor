@@ -1,0 +1,47 @@
+﻿<div class="shop-container">
+    <h3>Pickaxe Shop</h3>
+    <div class="shop-items">
+        @foreach (var item in ShopItems)
+        {
+            <ShopListItem Item="item"
+                          PlayerBalance="@Balance"
+                          OnPurchase="@HandlePurchase"
+                          IsOwned="@(CurrentPickaxe == item.Name)" />
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public decimal Balance { get; set; }
+
+    [Parameter]
+    public EventCallback<decimal> BalanceChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<decimal> MiningRateChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<string> CurrentPickaxeChanged { get; set; }
+
+    [Parameter]
+    public string CurrentPickaxe { get; set; } = "Hands";
+
+    private List<ShopItem> ShopItems = new()
+    {
+        new ShopItem { Name = "Wooden Pickaxe", Price = 0.0001m, MiningRate = 0.00005m },
+        new ShopItem { Name = "Stone Pickaxe", Price = 0.01m, MiningRate = 0.001m },
+        new ShopItem { Name = "Iron Pickaxe", Price = 0.1m, MiningRate = 0.01m },
+        new ShopItem { Name = "Diamond Pickaxe", Price = 10m, MiningRate = 1m }
+    };
+
+    private async Task HandlePurchase(ShopItem item)
+    {
+        if (Balance >= item.Price)
+        {
+            await BalanceChanged.InvokeAsync(Balance - item.Price);
+            await MiningRateChanged.InvokeAsync(item.MiningRate);
+            await CurrentPickaxeChanged.InvokeAsync(item.Name);
+        }
+    }
+}

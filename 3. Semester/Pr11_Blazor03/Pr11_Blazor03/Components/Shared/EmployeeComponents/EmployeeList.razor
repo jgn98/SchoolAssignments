@@ -1,0 +1,12 @@
+﻿
+<div class="mt-3">
+    @foreach (var employee in Employees)
+    {
+        <EmployeeCard Employee="@employee" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<Employee> Employees { get; set; } = new();
+}
